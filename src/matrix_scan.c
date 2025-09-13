@@ -8,16 +8,16 @@
 #define NUM_ROWS 8 
 #define NUM_MUX 5
 #define MUX_CHANNELS 8  // 74HC4051 tiene 8 entradas
-#define NUM_COLUMNS 33  // 11 BRK + 11 MDK + 11 MK
+#define NUM_COLUMNS 33  // 11 BR + 11 MD + 11 MK
 
 
-// Pines
+// Pines RP2350
 static const uint ROW_PINS[NUM_ROWS] = {2, 3, 4, 5, 6, 7, 8, 9};
 static const uint MUX_SELECT_PINS[3] = {10, 11, 12}; 
 static const uint MUX_Z_PINS[NUM_MUX] = {13, 14, 15, 16, 17};
 
 
-// prueba de escaneo en sentido inverso
+// Escaneo en "sentido inverso"
 void init_matrix(void) {
     // Configurar filas como entradas con pull out
     // pines de "observacion". 
