@@ -9,7 +9,7 @@
 
 // Modos de curva de velocidad
 #define VELOCITY_RAW_DT 99
-#define VELOCITY_LINEAR      0
+#define VELOCITY_LINEAR 0
 #define VELOCITY_LOGARITHMIC 1
 #define VELOCITY_EXPONENTIAL 2
 #define VELOCITY_LOG_POW 3

@@ -3,7 +3,7 @@
 #include <math.h>
 
 #define KEY_OUT_OF_RANGE 64
-#define KEY_NO_BR_OR_MK 0 // era 48
+#define KEY_NO_BR_OR_MK 48 
 #define KEY_NOTE_PLAUSIBLE 32
 
 #include "include/velocity_estimator.h"
@@ -24,7 +24,9 @@ static int velocity_curve_mode = VELOCITY_LOGARITHMIC; // default: logarítmica
 KeyCalibration key_calibration[NUM_KEYS];
 
 void init_velocity_estimator(void) {
+
     for (int i = 0; i < NUM_KEYS; i++) {
+
         mk_time[i] = at_the_end_of_time;
         br_time[i] = at_the_end_of_time;
     }
@@ -52,6 +54,13 @@ void register_br_time(int key, absolute_time_t t) {
 
 // Velocidad mínima: 6ms
 // Velocidad máxima: [40ms,50ms]
+
+// si el tiempo de MDK es más reciente que el de BR, significa que la estimación de velocidad activada
+// por MK se realizó sin generar un timepo de BR nuevo, es decir, no se soltó completamente la tecla.
+// en este caso, se debe calcular el tiempo normalizando para la "distancia" entre MDK y MK. Quizas es mejor
+// construir una función nueva que derive a la función de estimación de velocidad usada hasta ahora (BR-MK) o a 
+// la nueva función de estimación de velocidad entre MDK y MK.
+
 int estimate_velocity(int key) {
 
     float MIN_MS = key_calibration[key].min_ms;
@@ -60,17 +69,13 @@ int estimate_velocity(int key) {
     if (key < 0 || key >= NUM_KEYS) return KEY_OUT_OF_RANGE;
 
     // mientras existan dos sensores, se debería retornar velocidad 0 si no hay BR (No afecta a si no hay MK)
+    // Ya no debería ser necesario si se está verificando que la "tecla" esté en estado de espera de MK desde
+    // un BR
 
     if (is_at_the_end_of_time(br_time[key]) ||
         is_at_the_end_of_time(mk_time[key])) {
         return KEY_NO_BR_OR_MK; // neutro si falta BR o MK
     }
-
-    // si el tiempo de MDK es más reciente que el de BR, significa que la estimación de velocidad activada
-    // por MK se realizó sin generar un timepo de BR nuevo, es decir, no se soltó completamente la tecla.
-    // en este caso, se debe calcular el tiempo normalizando para la "distancia" entre MDK y MK. Quizas es mejor
-    // construir una función nueva que derive a la función de estimación de velocidad usada hasta ahora (BR-MK) o a 
-    // la nueva función de estimación de velocidad entre MDK y MK.
 
     int dt_us = absolute_time_diff_us(br_time[key], mk_time[key]);
     if (dt_us <= 0) return KEY_NOTE_PLAUSIBLE;
@@ -89,6 +94,7 @@ int estimate_velocity(int key) {
             velocity = dt_ms/2.0f;
             break;
         }
+
         case VELOCITY_LINEAR: {
             velocity = 127.0f * (1.0f - (dt_ms - MIN_MS) / (MAX_MS - MIN_MS));
             break;
@@ -96,8 +102,10 @@ int estimate_velocity(int key) {
 
         case VELOCITY_LOGARITHMIC: {
             //float kmh = 1.92f;  // quizas debería ser un poco menor.
-            float kmh = 2.22f;
-            float norm = logf(dt_ms + 1.0f) / logf(MAX_MS + 1.0f);  
+            //float kmh = 2.22f;
+            float kmh = 2.06f;
+            //float norm = logf(dt_ms + 1.0f) / logf(MAX_MS + 1.0f);  
+            float norm = logf(dt_ms) / logf(MAX_MS);
             velocity = 127.0f * (1.0f - norm) * kmh;
             break;
         }
@@ -135,7 +143,7 @@ int estimate_velocity(int key) {
     return (int)(velocity + 0.5f); // redondeo
 }
 
-// calibraciones
+// CALIBRACIONES
 
 // Inicializa la tabla con valores globales por defecto
 void init_velocity_calibration(float global_min_ms, float global_max_ms) {
@@ -147,9 +155,12 @@ void init_velocity_calibration(float global_min_ms, float global_max_ms) {
 
 // Permite ajustar una tecla individual
 void set_key_calibration(uint8_t key, float min_ms, float max_ms) {
+
     if (key >= NUM_KEYS) return;
+
     key_calibration[key].min_ms = min_ms;
     key_calibration[key].max_ms = max_ms;
+
 }
 
 void init_individual_keys(){
@@ -157,9 +168,11 @@ void init_individual_keys(){
     // las negras parecen ser 5.0f min y 35.0f max 
     // las blancas entre 6.0f y 45.0f
     // tecla 70, 73 y 75 muy fuerte --> Valor - NOTA_MIDI_BASE
-    set_key_calibration(midi_to_key(70), 5.0f, 20.0f);
-    set_key_calibration(midi_to_key(73), 5.0f, 22.0f);
-    set_key_calibration(midi_to_key(75), 5.0f, 20.0f);
+
+    set_key_calibration(midi_to_key(70), 1.0f, 15.0f);  // 20.0f
+    set_key_calibration(midi_to_key(73), 1.0f, 17.0f);  // 22.0f
+    set_key_calibration(midi_to_key(75), 1.0f, 15.0f);  // 20.0f
+
 }
 
  uint8_t midi_to_key(uint8_t midi){

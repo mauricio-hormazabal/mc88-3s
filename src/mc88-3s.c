@@ -29,6 +29,9 @@ int main() {
     // modulo midi
     init_midi();
 
+    // inicializa el estado de las teclas
+    init_key_state();
+
     // active sense 
     //init_active_sense();
 
@@ -38,7 +41,7 @@ int main() {
     // configura curva de velocidad por defecto
     set_velocity_curve(VELOCITY_LOGARITHMIC); 
 
-    sleep_ms(10); //era 100
+    sleep_ms(100); 
 
     while (true) {
 
