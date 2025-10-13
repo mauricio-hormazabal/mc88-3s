@@ -42,6 +42,7 @@
         "cstdint": "c",
         "uart.h": "c",
         "midi_in.h": "c",
-        "stdbool.h": "c"
+        "stdbool.h": "c",
+        "time.h": "c"
     }
 }

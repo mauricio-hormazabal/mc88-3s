@@ -31,7 +31,8 @@ void init_velocity_estimator(void) {
         br_time[i] = at_the_end_of_time;
     }
 
-    init_velocity_calibration(6.0f, 32.0f); // era 45.
+    //init_velocity_calibration(6.0f, 32.0f); // era 45.
+    init_velocity_calibration(3.0f, 45.0f); // era 45.
 
     init_individual_keys();
 }
@@ -101,11 +102,11 @@ int estimate_velocity(int key) {
         }
 
         case VELOCITY_LOGARITHMIC: {
-            //float kmh = 1.92f;  // quizas debería ser un poco menor.
-            //float kmh = 2.22f;
-            float kmh = 2.06f;
+            // 2.06 para ln
+            // 1.xx para log10
+            float kmh = 1.73f; //1.92
             //float norm = logf(dt_ms + 1.0f) / logf(MAX_MS + 1.0f);  
-            float norm = logf(dt_ms) / logf(MAX_MS);
+            float norm = log10f(dt_ms) / log10f(MAX_MS);
             velocity = 127.0f * (1.0f - norm) * kmh;
             break;
         }
@@ -130,14 +131,12 @@ int estimate_velocity(int key) {
             break;
         }
 
-        //Probar una combinancion de LOG_POW o EXP, con LOGARITHMIC 
-
         default:
             velocity = 64.0f;
     }
 
     
-    if (velocity < 11.0f) velocity = 11.0f;
+    if (velocity < 6.0f) velocity = 6.0f;
     if (velocity > 126.0f) velocity = 126.0f;
 
     return (int)(velocity + 0.5f); // redondeo
@@ -168,11 +167,17 @@ void init_individual_keys(){
     // las negras parecen ser 5.0f min y 35.0f max 
     // las blancas entre 6.0f y 45.0f
     // tecla 70, 73 y 75 muy fuerte --> Valor - NOTA_MIDI_BASE
+    // mk5 o br5 puede estar mal conectado (a un mdk5)
 
     set_key_calibration(midi_to_key(70), 1.0f, 15.0f);  // 20.0f
     set_key_calibration(midi_to_key(73), 1.0f, 17.0f);  // 22.0f
     set_key_calibration(midi_to_key(75), 1.0f, 15.0f);  // 20.0f
 
+    set_key_calibration(midi_to_key(69), 1.0f, 22.0f);
+    set_key_calibration(midi_to_key(71), 1.0f, 22.0f);  
+    set_key_calibration(midi_to_key(72), 1.0f, 22.0f);  
+    set_key_calibration(midi_to_key(74), 1.0f, 22.0f);  
+    set_key_calibration(midi_to_key(76), 1.0f, 22.0f);  
 }
 
  uint8_t midi_to_key(uint8_t midi){

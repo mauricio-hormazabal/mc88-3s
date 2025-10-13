@@ -2,7 +2,6 @@
 #include "hardware/gpio.h"
 #include "pico/time.h"
 #include "include/debounce_matrix.h"
-//#include "include/velocity_estimator.h"
 #include "include/midi_out.h"
 
 #define NUM_ROWS 8 
