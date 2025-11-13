@@ -10,10 +10,11 @@
 // Modos de curva de velocidad
 #define VELOCITY_RAW_DT 99
 #define VELOCITY_LINEAR 0
-#define VELOCITY_LOGARITHMIC 1
-#define VELOCITY_EXPONENTIAL 2
-#define VELOCITY_LOG_POW 3
-#define VELOCITY_GAMMA 4
+#define VELOCITY_LOG 1
+#define VELOCITY_LOGARITHMIC 2
+#define VELOCITY_EXPONENTIAL 3
+#define VELOCITY_LOG_POW 4
+#define VELOCITY_GAMMA 5
 
 // Inicializa el estado del estimador
 void init_velocity_estimator(void);

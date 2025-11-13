@@ -32,7 +32,7 @@ void init_velocity_estimator(void) {
     }
 
     //init_velocity_calibration(6.0f, 32.0f); // era 45.
-    init_velocity_calibration(3.0f, 45.0f); // era 45.
+    init_velocity_calibration(5.0f, 40.0f); // era 45.
 
     init_individual_keys();
 }
@@ -97,7 +97,19 @@ int estimate_velocity(int key) {
         }
 
         case VELOCITY_LINEAR: {
-            velocity = 127.0f * (1.0f - (dt_ms - MIN_MS) / (MAX_MS - MIN_MS));
+            //velocity = 127.0f * (1.0f - (dt_ms - MIN_MS) / (MAX_MS - MIN_MS));
+            // y = 45* (-126 / (b - a)) + (1 - (-126 / (b - a))*b)   where b=45 and a = 6
+            velocity = dt_ms * (-126 / (MAX_MS - MIN_MS)) + (1 - (-126 / (MAX_MS - MIN_MS))*MAX_MS);
+            break;
+        }
+
+        case VELOCITY_LOG: {
+            //  Y=x*(0.9/(45-6)) + (1.0 - (0.9/(45-6))*45),  6 < x  < 45
+            float c = 1.0f - (0.9f / (MAX_MS - MIN_MS)) * MAX_MS;
+            float m = (0.9f / (MAX_MS - MIN_MS));
+            float dtn = m * dt_ms + c;
+            // y=((1-log10(x)) -1)*126 +1
+            velocity = 126 * ((1 - log10f(dtn)) - 1 ) + 1;
             break;
         }
 
@@ -168,7 +180,7 @@ void init_individual_keys(){
     // las blancas entre 6.0f y 45.0f
     // tecla 70, 73 y 75 muy fuerte --> Valor - NOTA_MIDI_BASE
     // mk5 o br5 puede estar mal conectado (a un mdk5)
-
+    /**
     set_key_calibration(midi_to_key(70), 1.0f, 15.0f);  // 20.0f
     set_key_calibration(midi_to_key(73), 1.0f, 17.0f);  // 22.0f
     set_key_calibration(midi_to_key(75), 1.0f, 15.0f);  // 20.0f
@@ -177,7 +189,8 @@ void init_individual_keys(){
     set_key_calibration(midi_to_key(71), 1.0f, 22.0f);  
     set_key_calibration(midi_to_key(72), 1.0f, 22.0f);  
     set_key_calibration(midi_to_key(74), 1.0f, 22.0f);  
-    set_key_calibration(midi_to_key(76), 1.0f, 22.0f);  
+    set_key_calibration(midi_to_key(76), 1.0f, 22.0f);
+    */  
 }
 
  uint8_t midi_to_key(uint8_t midi){

@@ -39,7 +39,7 @@ int main() {
     init_velocity_estimator();
 
     // configura curva de velocidad por defecto
-    set_velocity_curve(VELOCITY_LOGARITHMIC); 
+    set_velocity_curve(VELOCITY_LOG); 
 
     sleep_ms(100); 
 
