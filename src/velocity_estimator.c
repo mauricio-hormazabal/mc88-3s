@@ -31,8 +31,7 @@ void init_velocity_estimator(void) {
         br_time[i] = at_the_end_of_time;
     }
 
-    //init_velocity_calibration(6.0f, 32.0f); // era 45.
-    init_velocity_calibration(5.0f, 40.0f); // era 45.
+    init_velocity_calibration(5.0f, 40.0f); 
 
     init_individual_keys();
 }
