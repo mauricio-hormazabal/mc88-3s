@@ -11,7 +11,6 @@
 #include "include/velocity_estimator.h"
 #include "include/pedals.h"
 
-
 #define SCAN_INTERVAL_US 1000
 
 int64_t last_scan_time = 0;
@@ -33,7 +32,7 @@ int main() {
     init_key_state();
 
     // active sense 
-    //init_active_sense();
+    init_active_sense();
 
     // inicializa el estimador de velocidad
     init_velocity_estimator();
@@ -54,7 +53,7 @@ int main() {
             //pedals_tick(); // anti-rebote y envío CC si hay cambios
 
             // envio de active sense
-            //active_sense_task();  
+            active_sense_task();  
 
             //revisar mensajes UART entrantes.
             //midi_in_check_uart();

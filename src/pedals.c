@@ -33,7 +33,7 @@ static inline void midi_send_cc(uint8_t ch, uint8_t cc, uint8_t val) {
 }
 
 // --- Init ---
-void pedals_init(uint8_t midi_channel) {
+void init_pedals(uint8_t midi_channel) {
     g_midi_channel = (midi_channel & 0x0F);
 
     // Configuración de UART (Ya está en en otro módulo)
@@ -71,7 +71,7 @@ void pedals_tick(void) {
             st[i].counter_ms = 0;
         } else {
             // Mismo nivel consecutivo: incrementa contador
-            if (st[i].counter_ms < 0xFFFF) st[i].counter_ms++;
+            if (st[i].counter_ms < 0xFFFF) st[i].counter_ms++; // se llama cada 1 ms
             // ¿Estable?
             if (st[i].counter_ms >= PEDAL_DEBOUNCE_MS) {
                 if (st[i].stable != cur) {

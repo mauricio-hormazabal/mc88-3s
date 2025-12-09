@@ -18,7 +18,7 @@ static const uint MUX_Z_PINS[NUM_MUX] = {13, 14, 15, 16, 17};
 
 // Escaneo en "sentido inverso"
 void init_matrix(void) {
-    // Configurar filas como entradas con pull out
+    // Configurar filas como entradas con pull up
     // pines de "observacion". 
     for (int i = 0; i < NUM_ROWS; i++) {
         gpio_init(ROW_PINS[i]);
