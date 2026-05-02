@@ -1,6 +1,6 @@
-# Contributing to [mc88-3s]
+# Contributing to [mc88-3s](https://github.com/mauricio-hormazabal/mc88-3s)
 
-First off, thank you for considering contributing to [mc88-3s]! It's people like you who make this project better for everyone.
+First off, thank you for considering contributing to [mc88-3s](https://github.com/mauricio-hormazabal/mc88-3s)! It's people like you who make this project better for everyone.
 
 By participating in this project, you agree to abide by our [Code of Conduct](CODE_OF_CONDUCT.md).
 
@@ -35,7 +35,7 @@ npm run dev
 ```
 
 ## Licensing
-By contributing, you agree that your contributions will be licensed under the same terms as the project's **Creative Commons Attribution-NonCommercial (CC BY-NC 4.0)** license.
+By contributing, you agree that your contributions will be licensed under the same terms as the project's **MIT** license.
 
 ---
 Thank you for your support!
