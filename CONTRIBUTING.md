@@ -1,6 +1,6 @@
-# Contributing to [Project Name]
+# Contributing to [mc88-3s]
 
-First off, thank you for considering contributing to [Project Name]! It's people like you who make this project better for everyone.
+First off, thank you for considering contributing to [mc88-3s]! It's people like you who make this project better for everyone.
 
 By participating in this project, you agree to abide by our [Code of Conduct](CODE_OF_CONDUCT.md).
 
