@@ -124,14 +124,14 @@ void scan_map_matrix(void){
 	}
 }
 
-// selección del mux
+// selección del canal del multiplexor
 static inline void set_mux_channel(uint8_t channel) {
     gpio_put(MUX_SELECT_PINS[0], (channel>>0) & 1);
     gpio_put(MUX_SELECT_PINS[1], (channel>>1) & 1);
     gpio_put(MUX_SELECT_PINS[2], (channel>>2) & 1);
 }
 
-// selección de canal del mux 
+// activacion del canal del multiplexor
 void set_channel_active(uint8_t mux){
 
 	for (int m = 0; m < NUM_MUX; m++) {

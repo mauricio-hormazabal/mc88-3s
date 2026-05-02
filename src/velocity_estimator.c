@@ -194,7 +194,7 @@ void init_individual_keys(){
 
  uint8_t midi_to_key(uint8_t midi){
      uint8_t key = midi - NOTA_MIDI_BASE;
-    if (key < 0 || key > 88){
+    if (key < 0 || key > NUM_KEYS){
          return 0;
     }
     return key;
