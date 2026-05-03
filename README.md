@@ -2,7 +2,7 @@
 
 ## Introduction
 
-`mc88-3s` is a firmware project for the Raspberry Pi Pico family that implements a MIDI controller with a scanned key matrix, velocity estimation, pedal handling, and UART MIDI output. The code is designed to read a piano-style or keyboard-style matrix, debounce keys, estimate note velocity, and send MIDI messages over the Pico UART.
+`mc88-3s` is a firmware project for the Raspberry Pi Pico family that implements a MIDI controller featuring a keyboard matrix scanner with velocity estimation, pedal support, and UART MIDI output. It is optimized to read piano-style matrices, providing robust debouncing and accurate note velocity calculation for real-time MIDI output.
 
 The project uses the Raspberry Pi Pico SDK and targets a Pico-compatible board. It integrates MIDI active sensing to keep connected MIDI hosts and devices synchronized.
 
