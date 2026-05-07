@@ -52,7 +52,7 @@ On successful build, the firmware output is generated in the `build/` directory 
 Flash the generated `.uf2` file to a Pico-compatible board using the standard USB bootloader method or your preferred flashing workflow.
 
 ## Hardware
-<img width="4080" height="3072" alt="IMG_20250910_222124635" src="https://github.com/user-attachments/assets/ba522dfc-d61d-44a2-98f9-796dd1aabb6e" />
+<img width="800" alt="IMG_20250910_222124635" src="https://github.com/user-attachments/assets/ba522dfc-d61d-44a2-98f9-796dd1aabb6e" />
 
 ## Notes
 
