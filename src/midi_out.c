@@ -3,6 +3,7 @@
 #include "hardware/gpio.h"
 #include "include/velocity_estimator.h"
 #include "include/midi_out.h"
+#include "include/usb_midi_out.h"
 //#include "include/midi_parser.h"
 
 #define MIDI_UART_ID uart0
@@ -40,6 +41,8 @@ void send_midi(uint8_t status, uint8_t data1, uint8_t data2) {
         midi_buffer[buffer_head][1] = data1;
         midi_buffer[buffer_head][2] = data2;
         buffer_head = next_head;
+        // integracion USB-C 2026-06-06
+        usb_send_midi_packet(status, data1, data2);
     }
 }
 

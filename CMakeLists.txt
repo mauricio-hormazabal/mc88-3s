@@ -45,18 +45,21 @@ add_executable( mc88-3s
         src/midi_active_sense.c
         src/midi_parser.c
         src/pedals.c
-        src/velocity_estimator.c )
+        src/velocity_estimator.c
+        src/usb_midi_out.c )
 
 pico_set_program_name(mc88-3s "mc88-3s")
 pico_set_program_version(mc88-3s "0.1")
 
 # Modify the below lines to enable/disable output over UART/USB
 pico_enable_stdio_uart(mc88-3s 0)
-pico_enable_stdio_usb(mc88-3s 1)
+pico_enable_stdio_usb(mc88-3s 0)
 
 # Add the standard library to the build
 target_link_libraries(mc88-3s
-        pico_stdlib)
+        pico_stdlib
+        tinyusb_device
+        tinyusb_board)
 
 # Add the standard include files to the build
 target_include_directories(mc88-3s PRIVATE

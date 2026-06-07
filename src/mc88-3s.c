@@ -6,6 +6,7 @@
 #include "include/debounce_matrix.h"
 #include "include/midi_in.h"
 #include "include/midi_out.h"
+#include "include/usb_midi_out.h"
 #include "include/midi_active_sense.h"
 #include "include/midi_parser.h"
 #include "include/velocity_estimator.h"
@@ -27,6 +28,8 @@ int main() {
 
     // modulo midi
     init_midi();
+    // integracion USB-C 2026-06-06
+    init_usb_midi_out();
 
     // inicializa el estado de las teclas
     init_key_state();
@@ -50,7 +53,7 @@ int main() {
 
             scan_map_matrix();
 
-            //pedals_tick(); // anti-rebote y envío CC si hay cambios
+            pedals_tick(); // anti-rebote y envío CC si hay cambios
 
             // envio de active sense
             active_sense_task();  
@@ -63,6 +66,8 @@ int main() {
         }
 
         midi_task();
+        // integracion USB-C 2026-06-06
+        usb_midi_task();
     }
     return 0;
 }
