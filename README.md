@@ -52,7 +52,12 @@ On successful build, the firmware output is generated in the `build/` directory 
 Flash the generated `.uf2` file to a Pico-compatible board using the standard USB bootloader method or your preferred flashing workflow.
 
 ## Hardware
+
+### PCB
 <img width="800" alt="IMG_20250910_222124635" src="https://github.com/user-attachments/assets/ba522dfc-d61d-44a2-98f9-796dd1aabb6e" />
+
+### Keybed pinout and connections
+[LK400GH (kurzweil).pdf](https://github.com/user-attachments/files/29104411/LK400GH.kurzweil.pdf)
 
 ## Notes
 
